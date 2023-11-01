@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single file upload</title>
+</head>
+<body>
+    {{ template "header" . }}
+    <h1>Upload single file with fields</h1>
+
+    <form action="/upload/images" method="post" enctype="multipart/form-data">
+        Name: <input type="text" name="name"><br>
+        Email: <input type="email" name="email"><br>
+        Files: <input type="file" name="image"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

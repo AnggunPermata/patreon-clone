@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    {{ template "header" . }}
+    <h1>Lets Sign Up</h1>
+
+    <form action="/signup" method="post" enctype="multipart/form-data">
+        Username: <input type="text" name="username"><br>
+        Email: <input type="email" name="email"><br>
+        Password: <input type="password" name="password"><br>
+        Fullname: <input type="text" name="full-name"><br>
+        role: <input type="text" name="role"><br>
+        Gender[F/M]: <input type="text" name="gender"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p>already have an account? please <a href="http://localhost:8080/login">sign in</a></p>
+</body>
+</html>

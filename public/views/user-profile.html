@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    {{ template "header" . }}
+    <h1>Welcome, {{.User.Username}}</h1>
+    <p>Nama : {{.User.FullName}}</p>
+
+    <form action="/users/{{.User.ID}}/follow" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="submit" value="follow">
+    </form>
+
+    <form action="/users/{{.User.ID}}/browse/followers" method="get" enctype="application/x-www-form-urlencoded">
+        <input type="submit" value="followers">
+    </form>
+
+    <form action="/users/{{.User.ID}}/browse/following" method="get" enctype="application/x-www-form-urlencoded">
+        <input type="submit" value="following">
+    </form>
+    {{ $userID := .User.ID }}
+    {{ $fullname := .User.FullName }}
+    {{ $username := .User.Username }}
+
+    <h2>Posts</h2>
+    {{range $index, $element := .PostData}}
+        <div>
+            <h3><a href="http://localhost:8080/users/{{$userID}}">{{ $username }}</a></h2>
+            <p>Fullname : {{$fullname}}</p>
+            <small>Date : {{.CreatedAt}} </small>
+            <h4>{{.Text}}</h4>
+        </div>
+    {{end}}
+</body>
+</html>
