@@ -31,7 +31,6 @@ func (b *BackendHandler) UserSignup(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"status": "failed to bind user data"})
 	}
 
-	fmt.Println(userData.Username)
 	if len(userData.Username) < 4 || len(userData.Email) < 4 || !strings.Contains(userData.Email, ".com") || len(userData.Password) < 6 || len(userData.Gender) > 1 || (userData.Gender != "F" && userData.Gender != "M") {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Please follow the rules to Sign up:",
