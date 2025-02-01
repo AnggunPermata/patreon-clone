@@ -1,0 +1,15 @@
+{{ define "list-posts" }}
+    {{ $userID := .User.ID }}
+    {{ $fullname := .User.FullName }}
+    {{ $username := .User.Username }}
+    
+    <h2>Posts</h2>
+    {{range $index, $element := .PostData}}
+        <div>
+            <h3><a href="http://localhost:8080/users/{{$userID}}">{{ $username }}</a></h2>
+            <p>Fullname : {{$fullname}}</p>
+            <small>Last Update : {{.UpdatedAt}} </small>
+            <h4>{{.Text}}</h4>
+        </div>
+    {{end}}
+{{ end }}

@@ -65,3 +65,11 @@ func GetAllFollowingID(c echo.Context, cfg *configs.Config, userID uint) ([]mode
 
 	return followingID, nil
 }
+
+func DeleteOneFollowingByUserId(c echo.Context, cfg *configs.Config, userID uint, followedID uint) (models.Followers, error) {
+	var followerData models.Followers
+	if err := cfg.DB.Where("user_id=? AND followed_user_id=?", userID, followedID).First(&followerData).Error; err != nil {
+		return followerData, err
+	}
+	if err := cfg.DB.Delete(followerData, )
+}

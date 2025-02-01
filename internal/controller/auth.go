@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -129,7 +128,7 @@ func (b *BackendHandler) UserLogin(c echo.Context) error {
 
 }
 
-func (b *BackendHandler) UserLogout (c echo.Context) error {
+func (b *BackendHandler) UserLogout(c echo.Context) error {
 	if c.Request().Method == "POST" || c.Request().Method == "GET" {
 		authCookie, err := c.Cookie("Authorization")
 		if err != nil {

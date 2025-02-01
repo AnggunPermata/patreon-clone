@@ -1,0 +1,8 @@
+{{ define "post-template" }}
+    <p>Fullname dari luar template: {{.User.FullName}}</p>
+    <form action="/posts/create" method="post" enctype="multipart/form-data">
+        Create Post: <input type="text" name="create_post"><br>
+        File: <input type="file" name="file"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+{{ end }}

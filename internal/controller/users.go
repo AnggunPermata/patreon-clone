@@ -30,6 +30,10 @@ func (b *BackendHandler) UserProfiles(c echo.Context) error {
 			return c.JSON(http.StatusBadRequest, "user not found")
 		}
 
+		if user.ID == userData["id"] {
+			renderPage = "dashboard.html"
+		}
+
 		posts, err := usecase.GetAllPostsByUserID(c, b.cfg, uint(targetUserId))
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, "failed to load posts")
@@ -69,10 +73,10 @@ func (b *BackendHandler) ShowUserDashboard(c echo.Context) error {
 		posts, _ := database.GetDashboardPostsByUserIDs(c, b.cfg, followingIDs)
 
 		return c.Render(200, renderPage, ReturnUserData{
-			User: currentUser,
+			User:     currentUser,
 			PostData: posts,
 		})
-		
+
 	}
 
 	return nil
