@@ -16,8 +16,7 @@ func NewRoutes(e *echo.Echo, handler *controller.BackendHandler) {
 	e.POST("/login", handler.UserLogin)
 	e.POST("/logout", handler.UserLogout)
 	e.GET("/logout", handler.UserLogout)
-	e.GET("/posts/create", handler.CreateAPost)
-	e.POST("/posts/create", handler.CreateAPost)
+	
 	e.GET("/users/:targeted_user_id/browse/posts", handler.GetAllPostsByUserID)
 	e.GET("/users/:targeted_user_id", handler.UserProfiles)
 	e.POST("/users/:targeted_user_id/follow", handler.FollowAUser)
@@ -26,4 +25,11 @@ func NewRoutes(e *echo.Echo, handler *controller.BackendHandler) {
 	// dashboard
 	e.GET("/dashboard", handler.ShowUserDashboard)
 	e.GET("/*", handler.HomePage)
+
+	// posts
+	postApi := e.Group("posts")
+	postApi.GET("/create", handler.Posts)
+	postApi.POST("/create", handler.Posts)
+
+	postApi.POST("/:post_id/delete", handler.Posts)
 }

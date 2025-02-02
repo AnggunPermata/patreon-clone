@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -14,31 +15,38 @@ type ReturnPostData struct {
 	PostInfo []models.Post
 }
 
-func (b *BackendHandler) CreateAPost(c echo.Context) error {
-	if c.Request().Method == "GET" {
-		userMapData, err := usecase.CheckingAuthorization(c, b.cfg, "Authorization")
-		if err != nil {
-			return c.Render(200, "login.html", nil)
-		}
+func (b *BackendHandler) Posts(c echo.Context) error {
+	userMap, err := usecase.CheckingAuthorization(c, b.cfg, "Authorization")
+	if err != nil {
+		return c.Render(200, "login.html", nil)
+	}
 
-		return c.Render(200, "posting.html", userMapData)
+	if c.Request().Method == "GET" {
+		return c.Render(200, "posting.html", userMap)
 	}
 
 	if c.Request().Method == "POST" {
-		userMap, err := usecase.CheckingAuthorization(c, b.cfg, "Authorization")
-		if err != nil {
-			return c.Render(200, "login.html", nil)
-		}
-
 		postData := models.Post{}
 		postData.UserID = userMap["id"].(uint)
-		postData.Text = c.FormValue("create_post")
 
-		if err := database.AddNewPost(c, b.cfg, postData); err != nil {
-			return c.JSON(http.StatusBadRequest, map[string]string{"status": "failed to create a new post", "error_message": err.Error()})
+		if c.FormValue("_method") == "DELETE" {
+			postID, _ := strconv.Atoi(c.Param("post_id"))
+
+			fmt.Println(fmt.Sprintf("POST ID : %v, USER ID: %v", postID, postData.UserID))
+			if err := database.DeleteOnePostByID(c, b.cfg, uint(postID), postData.UserID); err != nil {
+				return c.JSON(http.StatusBadRequest, map[string]string{"status": "failed to delete a post", "error_message": err.Error()})
+			}
+
+			return c.JSON(200, map[string]interface{}{"status": "success"})
+
+		} else {
+			postData.Text = c.FormValue("create_post")
+			if err := database.AddNewPost(c, b.cfg, postData); err != nil {
+				return c.JSON(http.StatusBadRequest, map[string]string{"status": "failed to create a new post", "error_message": err.Error()})
+			}
+
+			return c.JSON(200, map[string]interface{}{"status": "success"})
 		}
-
-		return c.JSON(200, map[string]interface{}{"status": "success"})
 	}
 
 	return c.JSON(404, map[string]interface{}{"status": "page not found"})

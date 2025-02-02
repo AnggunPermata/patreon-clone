@@ -86,7 +86,7 @@ func (b *BackendHandler) UserLogin(c echo.Context) error {
 				if err != nil {
 					return c.JSON(http.StatusBadRequest, "failed to load posts")
 				}
-				return c.Render(200, "user-profile.html", ReturnUserData{
+				return c.Render(200, "dashboard.html", ReturnUserData{
 					User:     user,
 					PostData: posts,
 				})
@@ -121,7 +121,7 @@ func (b *BackendHandler) UserLogin(c echo.Context) error {
 
 	cookies.WriteCookie(c, "Authorization", user.Token, "/", 2400)
 
-	return c.Render(200, "user-profile.html", ReturnUserData{
+	return c.Render(200, "dashboard.html", ReturnUserData{
 		User:     user,
 		PostData: posts,
 	})

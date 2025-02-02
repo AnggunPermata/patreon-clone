@@ -10,6 +10,14 @@
             <p>Fullname : {{$fullname}}</p>
             <small>Last Update : {{.UpdatedAt}} </small>
             <h4>{{.Text}}</h4>
+            {{ if eq $element.UserID $userID }}
+                <p>Post ID : {{$element.ID}}</p>
+                <form action="/posts/{{$element.ID}}/delete" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="delete_post">
+                </form>
+            {{ end }}
         </div>
     {{end}}
 {{ end }}
+

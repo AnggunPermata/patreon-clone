@@ -39,3 +39,8 @@ func GetDashboardPostsByUserIDs(c echo.Context, cfg *configs.Config, userIds []m
 	}
 	return posts, nil
 }
+
+func DeleteOnePostByID(c echo.Context, cfg *configs.Config, postID uint, userID uint) error {
+	err := cfg.DB.Where("id = ? AND user_id = ?", postID, userID).Delete(&models.Post{}).Error
+	return err
+}
