@@ -19,7 +19,10 @@ func NewRoutes(e *echo.Echo, handler *controller.BackendHandler) {
 	
 	e.GET("/users/:targeted_user_id/browse/posts", handler.GetAllPostsByUserID)
 	e.GET("/users/:targeted_user_id", handler.UserProfiles)
+
+	// follow system
 	e.POST("/users/:targeted_user_id/follow", handler.FollowAUser)
+	e.POST("/users/:targeted_user_id/unfollow", handler.UnfollowAUser)
 	e.GET("/users/:targeted_user_id/browse/followers", handler.GetAllFollower)
 	e.GET("/users/:targeted_user_id/browse/following", handler.GetAllFollowing)
 	// dashboard

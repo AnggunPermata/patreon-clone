@@ -14,6 +14,10 @@
         <input type="submit" value="follow">
     </form>
 
+    <form action="/users/{{.User.ID}}/unfollow" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="submit" value="unfollow">
+    </form>
+
     <form action="/users/{{.User.ID}}/browse/followers" method="get" enctype="application/x-www-form-urlencoded">
         <input type="submit" value="followers">
     </form>
